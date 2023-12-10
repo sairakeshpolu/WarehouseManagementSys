@@ -31,6 +31,14 @@ import { SalesOrderComponent } from './components/sales-order/sales-order.compon
 import { OrderItemsComponent } from './components/order-items/order-items.component';
 import { CreateCustomerComponent } from './components/create-customer/create-customer.component';
 import { AllCustomersComponent } from './components/all-customers/all-customers.component';
+import { PendingOrdersComponent } from './components/pending-orders/pending-orders.component';
+import { CustomerOrdersComponent } from './components/customer-orders/customer-orders.component';
+import { RouteOrdersDialogComponent } from './components/route-orders-dialog/route-orders-dialog.component';
+import { DriverRoutedOrdersComponent } from './components/driver-routed-orders/driver-routed-orders.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { AccountProfileComponent } from './components/account-profile/account-profile.component';
+import { RoutedOrDeliveredComponent } from './components/routed-or-delivered-orders/routed-or-delivered-orders.component';
+import { RoutedOrDeliveredRoutesComponent } from './components/routed-or-delivered-routes/routed-or-delivered-routes.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +53,15 @@ import { AllCustomersComponent } from './components/all-customers/all-customers.
     SalesOrderComponent,
     OrderItemsComponent,
     CreateCustomerComponent,
-    AllCustomersComponent
+    AllCustomersComponent,
+    PendingOrdersComponent,
+    CustomerOrdersComponent,
+    RouteOrdersDialogComponent,
+    DriverRoutedOrdersComponent,
+    PasswordChangeComponent,
+    AccountProfileComponent,
+    RoutedOrDeliveredComponent,
+    RoutedOrDeliveredRoutesComponent
   ],
   imports: [
     BrowserModule,

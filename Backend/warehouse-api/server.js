@@ -10,8 +10,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Connect to MongoDB
-mongoose
-    .connect("mongodb+srv://rakeshpolu67890:Rakesh67321@cluster0.gshexdx.mongodb.net/",{ useNewUrlParser: true,useUnifiedTopology: true })
+mongoose.set('debug', true)
+    //.connect("mongodb://127.0.0.1:27017/warehouse", { useNewUrlParser: true, useUnifiedTopology: true })
+    .connect("mongodb+srv://rakeshpolu67890:Rakesh67321@cluster0.gshexdx.mongodb.net/", { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected'))
     .catch(err => console.log(err));
 
@@ -31,6 +32,7 @@ app.use('/api/delete', require('./routes/api/delete'));
 app.use('/api/v1/user', require('./routes/api/user'));
 app.use('/api/v1/inventory/items', require('./routes/api/inventoryItems'));
 app.use('/api/v1/orders', require('./routes/api/orders'));
+app.use('/api/v1/customers', require('./routes/api/customer'));
 
 app.use(express.static('client/build'));
 

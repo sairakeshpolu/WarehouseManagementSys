@@ -25,6 +25,12 @@ import { MyOrdersComponent } from './components/my-orders/my-orders.component';
 import { SalesOrderComponent } from './components/sales-order/sales-order.component';
 import { CreateCustomerComponent } from './components/create-customer/create-customer.component';
 import { AllCustomersComponent } from './components/all-customers/all-customers.component';
+import { PendingOrdersComponent } from './components/pending-orders/pending-orders.component';
+import { DriverRoutedOrdersComponent } from './components/driver-routed-orders/driver-routed-orders.component';
+import { PasswordChangeComponent } from './components/password-change/password-change.component';
+import { AccountProfileComponent } from './components/account-profile/account-profile.component';
+import { RoutedOrDeliveredComponent } from './components/routed-or-delivered-orders/routed-or-delivered-orders.component';
+import { RoutedOrDeliveredRoutesComponent } from './components/routed-or-delivered-routes/routed-or-delivered-routes.component';
 
 const routes: Routes = [
   {
@@ -39,6 +45,14 @@ const routes: Routes = [
       { path: "my-orders", component: MyOrdersComponent },
       { path: "add-customer", component: CreateCustomerComponent },
       { path: "all-customers", component: AllCustomersComponent },
+      { path: "pending-orders", component: PendingOrdersComponent },
+      { path: "change-password", component: PasswordChangeComponent },
+      { path: "account-details", component: AccountProfileComponent },
+      { path: "delivered-orders", component: RoutedOrDeliveredRoutesComponent },
+      { path: "packed-orders", component: RoutedOrDeliveredComponent },
+      { path: "routed-orders", component: RoutedOrDeliveredRoutesComponent },
+      { path: "driver-pending-orders", component: DriverRoutedOrdersComponent },
+      { path: "route-order", component: PendingOrdersComponent },
       { path: "alerts", component: AlertsComponent },
       { path: "forms", component: FormsComponent },
       { path: "table", component: ProductComponent },

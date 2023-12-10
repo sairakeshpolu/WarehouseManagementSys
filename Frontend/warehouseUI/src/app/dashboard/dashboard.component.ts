@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  role = localStorage.getItem('role');
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  get isManager() {
+    return localStorage.getItem('role') == 'Manager';
+  }
+
+  get isSalesPerson() {
+    return localStorage.getItem('role') == 'SalesPerson';
   }
 
 }
