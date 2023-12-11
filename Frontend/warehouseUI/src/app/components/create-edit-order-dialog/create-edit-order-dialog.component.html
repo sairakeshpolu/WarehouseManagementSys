@@ -1,0 +1,81 @@
+<mat-dialog-content>
+  <div *ngIf="orderType=='PO'">
+    <h3 class="mb-32" style="text-align: center">Item Details</h3>
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Item Name</mat-label>
+      <input matInput type="text" placeholder="Enter item name" [(ngModel)]="item">
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Item type</mat-label>
+      <mat-select [(value)]="category">
+        <mat-option *ngFor="let item of type" [value]="item">
+          {{item}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline" floatLabel="always">
+      <mat-label>Stock</mat-label>
+      <input matInput type="number" class="example-right-align" placeholder="1" [(ngModel)]="stock"
+             min="1" required>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline" floatLabel="always">
+      <mat-label>Price</mat-label>
+      <input matInput type="number" placeholder="0" [(ngModel)]="price" min="1" required>
+      <span matTextPrefix>$&nbsp;</span>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <div *ngIf="orderType=='SO'">
+    <h3 class="mb-32" style="text-align: center">Item Details</h3>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline" *ngIf="orderType=='SO'">
+      <mat-label>Select Item</mat-label>
+      <mat-select [(value)]="selectedItem" (selectionChange)="itemChangeListener()">
+        <mat-option *ngFor="let item of inventoryItems" [value]="item">
+          {{item.item_name}} - {{item.category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" appearance="outline" floatLabel="always" style="width: 48%; float: left">
+      <mat-label>Quantity</mat-label>
+      <input matInput type="number" class="example-right-align" [(ngModel)]="stock" min="1"
+             [disabled]="!itemSelected" [max]="maxQtyValue">
+      <mat-error>
+        Value cannot exceed Available Stock or cannot be lesser than 1.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" appearance="outline" floatLabel="always" style="width: 48%; float: right">
+      <mat-label>Available Stock</mat-label>
+      <input matInput type="number" class="example-right-align" [ngModel]="availableStock" disabled>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" appearance="outline" floatLabel="always" style="width: 48%; float: left">
+      <mat-label>Price per each quantity</mat-label>
+      <input matInput type="number" class="example-right-align" [ngModel]="pricePerEachQty" disabled>
+      <span matTextPrefix>$&nbsp;</span>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" appearance="outline" floatLabel="always" style="width: 48%; float: right">
+      <mat-label>Total Price</mat-label>
+      <input matInput type="number" class="example-right-align" [ngModel]="totalPrice" disabled>
+      <span matTextPrefix>$&nbsp;</span>
+    </mat-form-field>
+  </div>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formValid">{{actionText}}</button>
+  <button mat-raised-button color="accent" (click)="close()">Cancel</button>
+</div>
