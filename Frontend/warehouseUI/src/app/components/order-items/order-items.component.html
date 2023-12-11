@@ -1,0 +1,215 @@
+
+<form #loginForm="ngForm" id="htmlData">
+  <h1 class="mb-56" style="text-align: center;font-weight: 700;font-size: 150%" mat-dialog-title>Order details for <span style="color: orangered">ORDER-{{orderNumber}}</span></h1>
+  <br />
+  <!--<div *ngIf="showTerms">
+    <h4 style="margin-left: 3%;">
+
+
+    </h4>
+    <h4 style="margin-left: 3%;">
+
+
+    </h4>
+  </div>-->
+  <mat-dialog-content>
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="text-nowrap w-100">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> S.No </th>
+          <td mat-cell class="fw-medium" *matCellDef="let element; let i = index;"> {{i+1}} </td>
+          <td mat-footer-cell *matFooterCellDef> <b>Total Amount</b> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Item name </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{ element.item_name }}</p>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Item type </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium op-5">{{element.category}}</p>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="askedStock">
+          <span *ngIf="!isPacker && !isSalesPerson">
+          <th mat-header-cell *matHeaderCellDef> {{isDriver ? 'Packed Quantity' : 'Ordered Quantity'}} </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{element.quantity}}</p>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+          </span>
+          <span *ngIf="isPacker || isSalesPerson">
+          <th mat-header-cell *matHeaderCellDef> Ordered Quantity </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{element.askedQuantity}}</p>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+          </span>
+        </ng-container>
+
+        <ng-container matColumnDef="packedStock" *ngIf="isPacker">
+          <th mat-header-cell *matHeaderCellDef> Pack Quantity </th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="isOrderPackStart(element)">
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput type="number" placeholder="Pack Quantity"
+                       [(ngModel)]="element.quantity" name="packQuantity" required min="1">
+                <mat-hint class="mat-mdc-form-field-error" style="display: contents;"
+                          *ngIf="element.quantity>element.availableQuantity || element.quantity>element.askedQuantity">
+                  Cannot exceed Ordered/Available Quantity
+                </mat-hint>
+                <mat-error>
+                  Please provide a valid Quantity
+                </mat-error>
+              </mat-form-field>
+            </span>
+            <span *ngIf="!isOrderPackStart(element)">
+              <p class="mb-0 fw-medium">{{element.quantity}}</p>
+            </span>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="availableStock" *ngIf="isPacker">
+          <th mat-header-cell *matHeaderCellDef> Available Quantity </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{element.availableQuantity}}</p>
+          </td>
+          <td mat-footer-cell *matFooterCellDef></td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <span *ngIf="isSalesPerson">
+          <th mat-header-cell *matHeaderCellDef> Estimated Price </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{ (element.price*element.askedQuantity) | currency}}</p>
+          </td>
+          <td mat-footer-cell *matFooterCellDef> <b>{{totalPrice | currency}}</b> </td>
+          </span>
+          <span *ngIf="!isSalesPerson">
+          <th mat-header-cell *matHeaderCellDef> Price </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{ (element.price*element.quantity) | currency}}</p>
+          </td>
+          <td mat-footer-cell *matFooterCellDef> <b>{{totalPrice | currency}}</b> </td>
+          </span>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter1" *ngIf="isDriverAndOrderDelivered">
+          <td mat-footer-cell *matFooterCellDef colspan="4">
+            <b>Previous Due amount:</b>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter2" *ngIf="isDriverAndOrderDelivered">
+          <td mat-footer-cell *matFooterCellDef colspan="1">
+            <b>{{previousDue | currency}}</b>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter3" *ngIf="isDriverAndOrderDelivered">
+          <td mat-footer-cell *matFooterCellDef colspan="4">
+            <b>Total Due amount:</b>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter4" *ngIf="isDriverAndOrderDelivered">
+          <td mat-footer-cell *matFooterCellDef colspan="1">
+            <b>{{ (totalPrice+previousDue) | currency}}</b>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter5" *ngIf="isDriverAndOrderDelivered">
+          <td mat-footer-cell *matFooterCellDef colspan="4">
+            <b>Amount Collected:</b>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter6" *ngIf="isDriverAndOrderDelivered">
+          <td mat-footer-cell *matFooterCellDef colspan="1">
+            <mat-form-field appearance="outline" color="primary" style="width: min-content;" *ngIf="!readOnly">
+              <input matInput type="number" placeholder="Enter Amount" [(ngModel)]="amountCollected" name="amountCollected"
+                     required min="0">
+              <mat-error>
+                Please provide a valid amount
+              </mat-error>
+            </mat-form-field>
+            <p class="mb-0 fw-medium" *ngIf="readOnly">{{amountPaidValue}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter7" *ngIf="isDriverAndOrderDelivered && showTerms">
+          <td mat-footer-cell *matFooterCellDef colspan="4">
+            <b>Accepted Terms:</b>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter8" *ngIf="isDriverAndOrderDelivered && showTerms">
+          <td mat-footer-cell *matFooterCellDef colspan="1">
+            <mat-form-field class="fs-16" appearance="outline" style="width: min-content;" *ngIf="!readOnly">
+              <mat-label>Terms</mat-label>
+              <mat-select [(value)]="acceptedTerm" required>
+                <mat-option *ngFor="let term of terms; let i = index;" [value]="i">
+                  {{term}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-error *ngIf="showTerms && acceptedTerm==undefined && showError && !readOnly" style=" display: initial;">
+              Please select a value
+            </mat-error>
+            <p class="mb-0 fw-medium" *ngIf="readOnly">{{acceptedTermValue}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter9" *ngIf="isDriverAndOrderDelivered && showTerms">
+          <td mat-footer-cell *matFooterCellDef colspan="4">
+            <b>Comments:</b>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amountDueFooter10" *ngIf="isDriverAndOrderDelivered && showTerms">
+          <td mat-footer-cell *matFooterCellDef colspan="1">
+            <mat-form-field class="fs-16" appearance="outline" *ngIf="!readOnly">
+              <mat-label>Comments</mat-label>
+              <input matInput type="text" placeholder="Enter Comments if any" [(ngModel)]="comments" name="comments">
+            </mat-form-field>
+            <p class="mb-0 fw-medium" *ngIf="readOnly">{{commentsValue}}</p>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        <span *ngIf="isDriverAndOrderDelivered">
+        <tr mat-footer-row *matFooterRowDef="['amountDueFooter1','amountDueFooter2']" class="example-second-footer-row"></tr>
+        </span>
+        <span *ngIf="isDriverAndOrderDelivered">
+        <tr mat-footer-row *matFooterRowDef="['amountDueFooter3','amountDueFooter4']" class="example-second-footer-row"></tr>
+        </span>
+        <span *ngIf="isDriverAndOrderDelivered">
+        <tr mat-footer-row *matFooterRowDef="['amountDueFooter5','amountDueFooter6']" class="example-second-footer-row"></tr>
+        </span>
+        <span *ngIf="isDriverAndOrderDelivered">
+        <tr mat-footer-row *matFooterRowDef="['amountDueFooter7','amountDueFooter8']" class="example-second-footer-row"></tr>
+        </span>
+        <span *ngIf="isDriverAndOrderDelivered">
+        <tr mat-footer-row *matFooterRowDef="['amountDueFooter9','amountDueFooter10']" class="example-second-footer-row"></tr>
+        </span>
+      </table>
+    </div>
+  </mat-dialog-content>
+</form>
+
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" (click)="confirmAction()" *ngIf="showActionButton">{{actionText}}</button>
+  <button mat-raised-button color="accent" [mat-dialog-close]>Close</button>
+  <button mat-raised-button color="warn" (click)="openPDF()"
+          *ngIf="isDriverAndOrderDeliveryCompleted || isManagerAndOrderRouted">Download PDF</button>
+</div>

@@ -1,0 +1,90 @@
+<mat-card class="w-100">
+  <mat-card-content>
+    <h2 class="mb-56" style="text-align: center;">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sales Order
+      <span style="float: right;">
+        <button mat-raised-button color="accent" class="text-white" (click)="addNewCustomer()">
+          <mat-icon>add_box</mat-icon>&nbsp;Add new customer
+        </button>&nbsp;
+        <button mat-raised-button color="accent" class="text-white" (click)="openDialog(undefined)"
+                [disabled]="!isCustomerSelected">
+          <mat-icon>add_box</mat-icon>&nbsp;Add item
+        </button>
+      </span>
+    </h2>
+
+    <mat-form-field class="fs-16" style="width: 39%" appearance="outline">
+      <mat-label>Customer</mat-label>
+      <mat-select [(value)]="selectedCustomer">
+        <mat-option *ngFor="let customer of customerDetails" [value]="customer">
+          {{customer.customer_firstName}}, {{customer.customer_lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="text-nowrap w-100">
+
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell class="fw-medium" *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef> Item name </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{ element.item_name }}</p>
+            <!--<p class="mb-0 fw-normal op-5">{{ element.work }}</p>-->
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef> Item type </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium op-5">{{element.category}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+          <th mat-header-cell *matHeaderCellDef> Price per each Qty </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">${{element.price}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="stock">
+          <th mat-header-cell *matHeaderCellDef> Stock </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">{{element.quantity}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef> Total price </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0 fw-medium">${{element.price*element.quantity}}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef style="text-align: center"> Actions </th>
+          <td mat-cell *matCellDef="let element" style="text-align: center">
+            <button mat-raised-button color="primary" class="text-white" (click)="editItem(element.index)">
+              <mat-icon>edit</mat-icon>&nbsp;Edit
+            </button>&nbsp;
+            <button mat-raised-button color="accent" class="text-white" (click)="deleteItem(element.index)">
+              <mat-icon>delete</mat-icon>&nbsp;Delete
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div><br /><br />
+    <button mat-raised-button color="primary" class="text-white" style="float: right"
+            (click)="createOrderOnSubmit()" [disabled]="recordCount<=0">
+      <mat-icon>arrow_right_alt</mat-icon>&nbsp;Submit
+    </button>
+  </mat-card-content>
+</mat-card>

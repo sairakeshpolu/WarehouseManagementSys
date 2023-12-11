@@ -1,0 +1,46 @@
+.table-responsive {
+  overflow-x: auto;
+}
+
+td.mat-cell {
+  padding: 16px;
+}
+
+th.mat-header-cell:first-of-type,
+td.mat-cell:first-of-type,
+td.mat-footer-cell:first-of-type {
+  padding: 16px;
+}
+
+th.mat-header-cell {
+  padding: 16px;
+}
+
+.mat-header-cell {
+  font-size: 14px;
+}
+.dragCursor {
+  margin-right: 16px;
+  cursor: move;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  /*background: mat-color($mat-light-theme-background, background);*/
+  background-color: whitesmoke;
+}
+
+.cdk-drag-placeholder {
+  /*background: map_get($mat-grey, 300);*/
+  background-color: grey;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
