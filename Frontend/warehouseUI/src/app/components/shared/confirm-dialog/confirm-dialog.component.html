@@ -1,0 +1,5 @@
+<h1 mat-dialog-title>{{popupTitle}}</h1>
+<div mat-dialog-actions align="end">
+  <button [mat-dialog-close] mat-raised-button color="primary" *ngIf="showCancel">{{cancelText}}</button>
+    <button mat-raised-button color="warn" [mat-dialog-close]="true">{{actionText}}</button>
+</div>
