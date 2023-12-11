@@ -1,0 +1,39 @@
+<div class="login-page">
+  <div class="login-block">
+    <div class="login-container">
+      <div class="imgcontainer double-div">
+        <div class="logo">
+          <h2 style="font-family: fantasy;margin-bottom: 30px;">Warehouse Management System</h2>
+        </div>
+        <img src="assets/images/house.jpeg" alt="Avatar" class="avatar">
+      </div>
+      <div class="double-div">
+        <mat-card class="cardWithShadow boxed-auth">
+          <mat-card-content class="p-32">
+            <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+              <mat-error *ngIf="!loginValid">
+                {{error}}
+              </mat-error>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput type="text" placeholder="Email/Mobile Number" [(ngModel)]="username" name="username" required>
+                <mat-error>
+                  Please provide a valid email address
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline" class="w-100" color="primary">
+                <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+                <mat-error>
+                  Please provide a valid password
+                </mat-error>
+              </mat-form-field>
+              <!--<a href="" class="forgotpassword">Forgot password?</a>--><br />
+              <button mat-raised-button color="accent" class="w-100 text-white">
+                <mat-icon>power_settings_new</mat-icon>&nbsp;Login
+              </button>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

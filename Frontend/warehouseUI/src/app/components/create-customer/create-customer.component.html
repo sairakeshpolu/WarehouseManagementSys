@@ -1,0 +1,105 @@
+<mat-card class="w-100">
+  <mat-card-content>
+    <h2 class="mb-56" style="text-align: center;">
+      Create Customer
+    </h2>
+
+    <mat-form-field class="fs-16" appearance="outline" style="width: 48%">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" placeholder="Enter customer first name"
+             [(ngModel)]="customerDetails.customer_firstName" required>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" style="width: 48%; float: right" appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput type="text" placeholder="Enter customer last name"
+             [(ngModel)]="customerDetails.customer_lastName" required>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline" style="width: 48%;">
+      <mat-label>Store Name</mat-label>
+      <input matInput type="text" placeholder="Enter store name" [(ngModel)]="customerDetails.store_name" required>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" appearance="outline" style="width: 48%; float: right">
+      <mat-label>Customer type</mat-label>
+      <mat-select [(value)]="customerDetails.customer_type" required>
+        <mat-option *ngFor="let customer of customerType" [value]="customer">
+          {{customer}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline" style="width: 48%;">
+      <mat-label>Tax ID</mat-label>
+      <input matInput type="text" placeholder="Enter tax ID" [(ngModel)]="customerDetails.tax_id">
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" appearance="outline" style="width: 48%; float: right">
+      <mat-label>Terms</mat-label>
+      <mat-select [(value)]="customerDetails.terms" required>
+        <mat-option *ngFor="let term of terms" [value]="term">
+          {{term}}
+        </mat-option>
+      </mat-select>
+      <mat-error>
+        Please select a value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Address</mat-label>
+      <input matInput type="text" placeholder="Enter customer's address" [(ngModel)]="customerDetails.address" required>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline" style="width: 48%; float: left">
+      <mat-label>Contact Person</mat-label>
+      <input matInput type="text" placeholder="Enter contact person" [(ngModel)]="customerDetails.contact_person" required>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline" style="width: 48%; float: right">
+      <mat-label>Email</mat-label>
+      <input matInput type="text" placeholder="Enter email address" [(ngModel)]="customerDetails.email"
+             pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" required>
+      <mat-error>
+        Please provide a valid email address
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100 fs-16" appearance="outline">
+      <mat-label>Contact Number</mat-label>
+      <input matInput type="text" placeholder="Enter phone number with country code"
+             [(ngModel)]="customerDetails.phone_number" required>
+      <mat-error>
+        Please provide a valid number
+      </mat-error>
+    </mat-form-field>
+
+    <br />
+    <br />
+    <div align="end">
+      <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!formValid">
+        Submit
+      </button>&nbsp;&nbsp;
+      <button mat-raised-button color="accent" (click)="cancel()">Cancel</button>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,43 @@
+<mat-card class="w-100">
+  <mat-card-content>
+    <h2 class="mb-56" style="text-align: center;">
+      User Details
+    </h2>
+
+    <mat-form-field class="fs-16" appearance="outline" style="width: 48%; font-weight: bold; font-size: 120%;">
+      <mat-label>Username</mat-label>
+      <input matInput type="text" [ngModel]="userDetails?.username" name="username" disabled>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" style="width: 48%; float: right; font-weight: bold; font-size: 120% " appearance="outline">
+      <mat-label>Role</mat-label>
+      <input matInput type="text" [ngModel]="userDetails?.usertype" name="usertype" disabled>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" appearance="outline" style="width: 48%; font-weight: bold; font-size: 120% ">
+      <mat-label>First Name</mat-label>
+      <input matInput type="text" [ngModel]="userDetails?.firstName" name="firstName" disabled>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="fs-16" style="width: 48%; float: right; font-weight: bold; font-size: 120% " appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput type="text" [ngModel]="userDetails?.lastName" name="lastName" disabled>
+      <mat-error>
+        Please provide a valid value
+      </mat-error>
+    </mat-form-field>
+
+
+    <br />
+    <br />
+  </mat-card-content>
+</mat-card>

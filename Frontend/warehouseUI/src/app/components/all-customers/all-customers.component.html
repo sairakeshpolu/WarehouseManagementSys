@@ -1,0 +1,81 @@
+<!-- Daily Activity -->
+<mat-card class="w-100">
+  <mat-card-content>
+    <h2 class="mb-56" style="text-align: center;">
+      All Customers
+      <button mat-raised-button color="accent" class="text-white" style="float: right" routerLink="/add-customer"
+              *ngIf="!isAccountant && !isManager">
+        <mat-icon>create_new_folder</mat-icon>&nbsp;Add Customer
+      </button>
+    </h2>
+    
+
+    <div class="table-responsive">
+      <table mat-table [dataSource]="dataSource" class="text-nowrap w-100">
+
+        <ng-container matColumnDef="customerName">
+          <th mat-header-cell *matHeaderCellDef> Customer - Store </th>
+          <td mat-cell *matCellDef="let element">
+            <a style="color: -webkit-link; cursor: pointer; text-decoration: underline; "
+               (click)="displayOrders(element)" matTooltip="View orders for this customer" *ngIf="isAccountant">
+              {{element.customer_firstName}}, {{element.customer_lastName}} - {{element.store_name}}
+            </a>
+            <span *ngIf="!isAccountant">{{element.customer_firstName}}, {{element.customer_lastName}} - {{element.store_name}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="customerType">
+          <th mat-header-cell *matHeaderCellDef> Type </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0">{{ element.customer_type }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef> Email Address </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0">{{ element.email }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="address">
+          <th mat-header-cell *matHeaderCellDef> Address </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0">{{ element.address }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contactNumber">
+          <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0">{{ element.phone_number }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="terms">
+          <th mat-header-cell *matHeaderCellDef> Terms </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0">{{ element.terms }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taxId">
+          <th mat-header-cell *matHeaderCellDef> Tax ID </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0">{{ element.tax_id }}</p>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contactPerson">
+          <th mat-header-cell *matHeaderCellDef> Contact Person </th>
+          <td mat-cell *matCellDef="let element">
+            <p class="mb-0">{{ element.contact_person }}</p>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>
